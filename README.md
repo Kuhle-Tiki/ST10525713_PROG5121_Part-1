@@ -8,7 +8,7 @@
 ---
 
 ## Project Information
-For my POE Part 1, I had to create a Java program that helps the users sign up and log in safely. I wrote special rules to make sure usernames and passwords are secure - like checking whether a user is using special characyers and specific lengths for their passwords and usernames. I also had to include a unit test to prove that the code worked correctly without any errors and that it would work every single time correctly. Everything was built on Netbeans and managed using GitHub to keep my work organized and proffesional. on the Netbeans project i have three classes which consists of login, main and loginTest.java. 
+For my POE Part 1, I had to create a Java program that helps the users sign up and log in safely. I wrote special rules to make sure usernames and passwords are secure - like checking whether a user is using special characters and specific lengths for their passwords and usernames. I also had to include a unit test to prove that the code worked correctly without any errors and that it would work every single time correctly. Everything was built on Netbeans and managed using GitHub to keep my work organized and proffesional. On the Netbeans project i have three classes which consists of login.java, main.java and loginTest.java. 
 
 ---
 ## Features
