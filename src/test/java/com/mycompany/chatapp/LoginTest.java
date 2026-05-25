@@ -26,12 +26,13 @@ public class LoginTest {
     }
     // Test Password Complexity
     @Test
-    public void testPasswordComplexity() {
+    public boolean testPasswordComplexity() {
         // Meets all complexity rules
         Assertions.assertTrue(instance.checkPasswordComplexity("Ch&&sec@ke99!"));
     
         // Does not meet complexity rules
         Assertions.assertFalse(instance.checkPasswordComplexity("password"));
+            return false;
     }
     @Test
     public void testCellPhoneNumber(){

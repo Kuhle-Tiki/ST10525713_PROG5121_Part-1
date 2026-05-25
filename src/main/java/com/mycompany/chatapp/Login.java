@@ -18,7 +18,7 @@ public class Login {
     public boolean checkUsername(String username) {
         // boolean result is retuned directly 
         // It will be 'true' only if both conditions are met
-        return username.contains("-")&& username.length() <= 5;
+        return username.contains("_")&& username.length() <= 5;
     }
     public boolean checkPasswordComplexity(String password){
         // Step 6: Password Validation
