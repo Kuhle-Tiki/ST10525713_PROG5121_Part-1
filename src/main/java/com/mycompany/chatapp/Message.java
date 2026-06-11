@@ -193,7 +193,7 @@ public class Message {
     /**
      * Reads the messages.json file and loads all stored messages into the
      * storedMessages array. Called once at application startup after login.
-     * Attribution: org.json library - https://mvnrepository.com/artifact/org.json/json
+     * 
      */
     public static void loadStoredMessages() {
         try (BufferedReader reader = new BufferedReader(new FileReader("messages.json"))) {
