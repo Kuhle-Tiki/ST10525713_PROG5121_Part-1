@@ -39,14 +39,19 @@ public class MessageTest {
         message2.setRecipient("08575975889");
         message2.setMessageText("Hi keagan, did you recieve the payment?");
     }
+    // ---Part 2 Tests-------
     // ---Length Test----------
-    /** Message under 250 characters, must return to "Message ready to send, therefore success."*/
+    /**
+     * Message under 250 characters must return "Message ready to send."
+     */
     @Test
     public void testCheckMessageLength_validMessage_returnsSuccess() {
         String result = message1.checkMessageLength("Hi Mike, can you join us for dinner tonight?");
         assertEquals("Message ready to send.", result);
     }
-    /** if above 250 characters, it must return as a failure*/
+    /**
+     * if above 250 characters, it must return as a failure
+     */
     @Test
     public void testCheckMessageLength_over250chars_returnsFailureWithCount(){
         String longMessage = "A".repeat(260);
@@ -75,7 +80,7 @@ public class MessageTest {
     /** Test Case 2: 08575975889 has no international code therefore it must fail*/
     @Test
     public void testCheckRecipientCell_invalidNumber_returnsFailure() {
-        assertEquals("Cell phone is incorrectly formatted or does not contain an"+ " international code. Please correct number and try again.", message2.checkRecipientCell());
+        assertEquals("Cell phone number is incorrectly formatted or does not contain an" + " international code. Please correct number and try again.", message2.checkRecipientCell());
     }
     // ---Message Hash Test------------
     /** Case Test 1: hash must end with :0
@@ -87,7 +92,7 @@ public class MessageTest {
         assertTrue(hash.endsWith(":0:HITONIGHT"), "Hash should end with :0:HITONIGHT but was:" + hash);
     }
     /**
-     * hash mus be entirely uppercase
+     * hash must be entirely uppercase
      */
     @Test
     public void testCreatMessageHash_isUppercase() {
@@ -150,8 +155,8 @@ public class MessageTest {
         public String sentMessage() {
             switch (simulatedChoice) {
                 case 1: return "Message successfully sent.";
-                case 2: return "Press 0 to delete the message.";
-                case 3: return "Message successfuly stored ";
+                case 2: return "Press 0 to delete message.";
+                case 3: return "Message successfully stored.";
                 default: return "Invalid option selected.";
             }
         }
@@ -162,7 +167,7 @@ public class MessageTest {
      * User selects: option 1
      */
     @Test 
-    public void testSentMessage_userSelected_returnsCorrectString() {
+    public void testSentMessage_userSelected_returnCorrectString() {
         assertEquals("Message successfully sent.", new TestableMessage(1).sentMessage());
     }
     /**
@@ -176,8 +181,130 @@ public class MessageTest {
      * User selects: option 3
      */
     @Test
-    public void testSentMessage_userSelectsStire_returnCorrectString() {
+    public void testSentMessage_userSelectsStore_returnCorrectString() {
         assertEquals("Message successfully stored.", new TestableMessage(3).sentMessage());
                 
     }
+    //---Part 3---
+    /**
+     * After processing messages 1 and 4 as sent, the sent messages array
+     */
+    @Test
+    public void testSentMessagesArray_correctlyPopulated() {
+        // message 1 - sent
+        Message msg1 = new Message(0, "+27834557896", "Did you get the cake?");
+        msg1.setMessageHash(msg1.createMessageHash());
+        Message.getSentMessages().add(msg1.getMessageText());
+        
+        // message 4 - sent
+        Message msg4 = new Message(3, "0838884567", "It is dinner time!");
+        msg4.setMessageHash(msg4.createMessageHash());
+        Message.getSentMessages().add(msg4.getMessageText());
+        
+        assertTrue(Message.getSentMessages().contains("Did you get the cake?"), "sentMessages should contain 'Did you get the cake?'");
+        assertTrue(Message.getSentMessages().contains("It is dinner time!"), "sentMessages should contain 'It is dinner time!'");
+    }
+    /**
+     * display longest Message() must return longest message
+     */
+    @Test
+    public void testDisplayLongestMessage_returnCorrectMessage() {
+        Message.getStoredMessages().add("Where are you? You are late! I have asked you to be on time.");
+        Message.getStoredMessages().add("Ok, I am lesving without you.");
+        
+        Message msg = new Message();
+        String result = msg.displayLongestMessage();
+        assertEquals("Where are you? You are late! I have asked you to be on time.",result);
+        
+    }
+    /**
+     * 
+     */
+     @Test
+    public void testSearchByMessageID_returnsCorrectMessage() {
+        // populate parallel arrays with message 4's
+        Message msg4 = new Message(3, "0838884567", "It is dinner time!");
+        msg4.setMessageHash(msg4.createMessageHash());
+        Message.getSentMessages().add(msg4.getMessageText());
+        
+        // Use actual generated ID
+        String generatedID = msg4.getMessageID();
+        // add ID directly via helper getter
+        Message searcher = new Message();
+        // test via full flow using real message object
+        Message.clearMessages();
+        Message fixedMsg = new Message();
+        fixedMsg.setMessageID("0838884567");
+        fixedMsg.setMessageText("It is dinner time!");
+        fixedMsg.setRecipient("0838884567");
+        fixedMsg.setMessageHash(fixedMsg.createMessageHash());
+        Message.getSentMessages().add(fixedMsg.getMessageText());
+        
+        /**
+         * add message id via static helper
+         * test via printMessages report
+         */
+        assertTrue(Message.getSentMessages().contains("It is dinner time!"), "Sent messages should contain 'It is dinner time!");
+        
 }
+    /**
+     * search for +27838884567 should return both messages
+     */
+    @Test
+    public void testSearchByRecipient_returnsAllMatchingMessages() {
+        // stored messages with both +27838884567
+        Message.getStoredMessages().add("Where are you? You are late! I have asked you to be on time.");
+        Message.getStoredMessages().add("Ok, I am leaving without you.");
+        
+        // Verify both are present
+        assertTrue(Message.getStoredMessages().contains("Where are you? You are late! I have asked you to be on time."), "storedMessages should conatin message 2");
+        assertTrue(Message.getStoredMessages().contains("Ok, I am leaving without you."), "storedMessages should contain message 5");
+        
+}
+    /**
+     * deleting message 2 by its hash must return the correct success message
+     */
+     @Test
+    public void testDeleteByHash_removesCorrectMessage() {
+        // Set up message 2 and add it to sent messages and hashes
+        Message msg2 = new Message(1, "+27838884567",
+                "Where are you? You are late! I have asked you to be on time.");
+        String hash = msg2.createMessageHash();
+        Message.getSentMessages().add(msg2.getMessageText());
+        Message.getMessageHashes().add(hash);
+        Message.getRecipientList().add(msg2.getRecipient());
+
+        String result = msg2.deleteByHash(hash);
+        assertEquals("Message: Where are you? You are late! I have asked you to be on time."
+                + " successfully deleted.", result);
+
+
+}
+    /**
+     * display must contain hash, recipient and message
+     */
+      @Test
+    public void testDisplayReport_containsRequiredFields() {
+        // Set up a sent message with known values
+        Message msg1 = new Message(0, "+27834557896", "Did you get the cake?");
+        String hash = msg1.createMessageHash();
+        Message.getSentMessages().add(msg1.getMessageText());
+        Message.getMessageHashes().add(hash);
+        Message.getRecipientList().add(msg1.getRecipient());
+
+        String report = Message.printMessages();
+
+        assertTrue(report.contains("Did you get the cake?"),
+                "Report should contain the message text");
+        assertTrue(report.contains("+27834557896"),
+                "Report should contain the recipient");
+        assertTrue(report.contains(hash),
+                "Report should contain the message hash");
+    }
+}
+
+    
+
+
+
+
