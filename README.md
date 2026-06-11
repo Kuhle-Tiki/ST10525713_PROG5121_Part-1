@@ -20,3 +20,29 @@ This makes sure that the user has at least 8 characters, which consists of a cap
 
 ### Cellphone Validation
 This part of the code checks that the user enters exactly 10 numbers. it makes sure they dont leave outthe +27 as well.
+
+# QuickChat Application - Final POE Submission
+
+## Build Status
+![Java CI with Maven](https://github.com/YOUR_GITHUB_USERNAME/YOUR_REPO_NAME/actions/workflows/test.Java.yml/badge.brand.svg)
+> **Note:** The green checkmark badge above indicates that all automated compilation and JUnit Jupiter unit tests are passing successfully in GitHub Actions.
+
+---
+
+## Project Description
+The **QuickChat Application** is a holistic Java-based console application developed using Maven and tested with JUnit Jupiter. The project spans three distinct implementation parts to build a secure, functional messaging system:
+* **Part 1 (Authentication):** A user registration and login system complete with strict username validation, password complexity rules, and cell number verification.
+* **Part 2 (Core Messaging & Storage):** Multi-option message processing allowing users to Send, Discard, or Store messages directly into a persistent `messages.json` file.
+* **Part 3 (Data Arrays & Reporting):** Advanced session tracking utilizing dynamic parallel arrays to store message contents, unique IDs, hashes, and recipients. It introduces a comprehensive sub-menu for data analysis, searching, entry deletion, and formatted report printing.
+
+---
+
+## Final POE Video Demonstration
+
+--
+## Project Description
+The **QuickChat Application** is a holistic Java-based console application developed using Maven and tested with JUnit Jupiter. The project spans three distinct implementation parts to build a secure, functional messaging system:
+* **Part 1 (Authentication):** A user registration and login system complete with strict username validation, password complexity rules, and cell number verification.
+* **Part 2 (Core Messaging & Storage):** Multi-option message processing allowing users to Send, Discard, or Store messages directly into a persistent `messages.json` file.
+* **Part 3 (Data Arrays & Reporting):** Advanced session tracking utilizing dynamic parallel arrays to store message contents, unique IDs, hashes, and recipients. It introduces a comprehensive sub-menu for data analysis, searching, entry deletion, and formatted report printing.
+
